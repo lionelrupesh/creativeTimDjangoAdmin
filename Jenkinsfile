@@ -11,6 +11,13 @@ pipeline {
     }
 
     stages {
+	stage('Checkout') {
+            steps {
+                echo "Git CheckOut"
+                git "${REPO_URL}"
+            }
+        }
+
         stage('Build and Test') {
             steps {
                 echo "Setting Virtual Environment"
@@ -46,25 +53,3 @@ pipeline {
             '''
       }
      }
-        stage('Publish to Registry') {
-            steps {
-                echo "Pushing Docker Image to registry"
-                sh '''
-                docker image tag $IMAGE_NAME:latest $REGISTRY_URL/$IMAGE_NAME:V1
-                docker image push $REGISTRY_URL/$IMAGE_NAME:V1
-                '''
-                    }
-                }
-    }
-
-        
-
-    post {
-        success {
-            echo 'Pipeline successfully executed!'
-        }
-        failure {
-            echo 'Pipeline failed!'
-        }
-    }
-}
