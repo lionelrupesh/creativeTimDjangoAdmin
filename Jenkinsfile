@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo "Setting Virtual Environment"
                 sh "python${PYTHON_VERSION} -m venv venv"
-                sh "venv/bin/activate"
+                sh "source venv/bin/activate"
                 
                 echo "Installing dependencies and run tests"
                 sh 'pip install -r requirements.txt'
@@ -39,7 +39,7 @@ pipeline {
                 cd webdesign/material-dashboard-master
                 docker image build -t ${IMAGE_NAME}:${BUILD_NUMBER} .
                 cd $original_pwd
-                '''
+                sh '''
                 
             }
         }
@@ -51,7 +51,7 @@ pipeline {
             docker container stop PythonContainer || true
             docker container rm PythonContainer || true
             docker container run -itd --name PythonContainer -p 8089:8080 $IMAGE_NAME:$BUILD_NUMBER
-            '''
+            sh '''
       }
      }
         stage('Publish to Registry') {
@@ -60,7 +60,7 @@ pipeline {
                 sh '''
                 docker image tag $IMAGE_NAME:latest $REGISTRY_URL/$IMAGE_NAME:V1
                 docker image push $REGISTRY_URL/$IMAGE_NAME:V1
-                '''
+                sh '''
                     }
                 }
     }
