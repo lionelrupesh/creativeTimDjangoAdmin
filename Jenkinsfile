@@ -5,6 +5,7 @@ pipeline {
         // Define Environment Variables
         PYTHON_VERSION = '3.8'
         IMAGE_NAME = 'MaterialDashboard'
+        BUILD_NUMBER = '8090'
         REGISTRY_URL = 'http://192.168.33.10:5000'
         REGISTRY_CREDENTIALS_ID = 'lionelrupesh'
         REPO_URL = 'https://github.com/lionelrupesh/creativeTimDjangoAdmin.git'
