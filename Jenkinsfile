@@ -11,13 +11,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo "Git CheckOut"
-                git "${REPO_URL}"
-            }
-        }
-
         stage('Build and Test') {
             steps {
                 echo "Setting Virtual Environment"
