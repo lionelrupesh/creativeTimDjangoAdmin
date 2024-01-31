@@ -9,6 +9,7 @@ pipeline {
         REGISTRY_URL = 'http://192.168.33.10:5000'
         REGISTRY_CREDENTIALS_ID = 'lionelrupesh'
         REPO_URL = 'https://github.com/lionelrupesh/creativeTimDjangoAdmin.git'
+        GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
     }
 
     stages {
@@ -18,6 +19,13 @@ pipeline {
                 git "${REPO_URL}"
             }
         }
+
+        stage('Clone Repository') {
+            steps {
+                script {
+                    git credentialsId: 'sshpubkey', url: 'git@github.com:lionelrupesh/creativeTimDjangoAdmin.git'
+                }
+            }
 
         stage('Build and Test') {
             steps {
